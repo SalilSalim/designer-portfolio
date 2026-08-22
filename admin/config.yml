@@ -1,0 +1,45 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "site"
+    label: "Site Settings"
+    files:
+      - name: "settings"
+        label: "General Info"
+        file: "content/site.json"
+        fields:
+          - { label: "Name", name: "name", widget: "string" }
+          - { label: "Role / Title", name: "role", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "text" }
+          - { label: "About paragraph", name: "about", widget: "text" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "Behance URL", name: "behance", widget: "string", required: false }
+          - { label: "Availability note", name: "availability", widget: "string" }
+
+  - name: "work"
+    label: "Work"
+    files:
+      - name: "items"
+        label: "Work Items"
+        file: "content/work.json"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            summary: "{{title}} — {{category}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - label: "Category"
+                name: "category"
+                widget: "select"
+                options: ["UI/UX Design", "Graphic Design"]
+              - { label: "Year", name: "year", widget: "string" }
+              - { label: "Medium / Tools", name: "medium", widget: "string", required: false }
+              - { label: "Description", name: "description", widget: "text", required: false }
+              - { label: "Image", name: "image", widget: "image" }

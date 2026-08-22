@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfolio</title>
+<meta name="description" content="Graphic design and UI/UX design portfolio." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0d;
+    --surface:#141319;
+    --surface-2:#1c1a20;
+    --text:#ece7de;
+    --text-dim:#8b8790;
+    --line:rgba(236,231,222,0.12);
+    --accent:#c9a15a;
+    --accent-soft:rgba(201,161,90,0.14);
+    --accent2:#7c6a8f;
+    --accent2-soft:rgba(124,106,143,0.16);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Space Grotesk',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent-soft);color:var(--text);}
+  a{color:inherit;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 32px;}
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 32px;
+    background:linear-gradient(to bottom, rgba(11,11,13,0.9), rgba(11,11,13,0));
+    backdrop-filter:blur(2px);
+  }
+  .nav-name{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim);}
+  .nav-links{display:flex;gap:28px;list-style:none;margin:0;padding:0;}
+  .nav-links a{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;color:var(--text-dim);transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    overflow:hidden;
+    padding:120px 32px 80px;
+  }
+  .hero-spotlight{
+    position:absolute;inset:0;
+    background:radial-gradient(600px circle at var(--x,50%) var(--y,30%), rgba(201,161,90,0.09), transparent 60%);
+    pointer-events:none;
+    transition:background .1s ease-out;
+  }
+  .hero-inner{position:relative;max-width:1160px;margin:0 auto;width:100%;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:22px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:24px;height:1px;background:var(--accent);display:inline-block;}
+  h1.display-name{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:500;
+    font-size:clamp(48px,9vw,110px);line-height:0.98;margin:0 0 22px;
+    letter-spacing:-0.01em;
+  }
+  .role-line{
+    font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--text-dim);margin:0 0 28px;
+  }
+  .tagline{font-size:clamp(18px,2.4vw,24px);max-width:640px;color:var(--text);line-height:1.5;margin:0;font-weight:400;}
+  .scroll-hint{position:absolute;bottom:28px;left:32px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;}
+  .section{padding:120px 0;border-top:1px solid var(--line);}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:56px;flex-wrap:wrap;gap:20px;}
+  .section-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(28px,4vw,40px);margin:0;}
+  .section-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);letter-spacing:0.08em;}
+  .about-grid{display:grid;grid-template-columns:220px 1fr;gap:56px;align-items:start;}
+  .about-frame{
+    aspect-ratio:3/4;border-radius:var(--radius);
+    background:linear-gradient(160deg,var(--surface-2),var(--surface));
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-style:italic;font-size:42px;color:var(--text-dim);
+  }
+  .about-text{font-size:18px;line-height:1.75;color:var(--text);max-width:640px;}
+  .about-meta{margin-top:28px;display:flex;gap:32px;flex-wrap:wrap;}
+  .about-meta div{font-family:'JetBrains Mono',monospace;font-size:12px;}
+  .about-meta span{display:block;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;font-size:11px;}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;
+    padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--text-dim);
+    cursor:pointer;transition:all .2s;
+  }
+  .chip:hover{color:var(--text);border-color:var(--text-dim);}
+  .chip.active[data-cat="all"]{background:var(--text);color:var(--bg);border-color:var(--text);}
+  .chip.active[data-cat="UI/UX Design"]{background:var(--accent2);color:#0b0b0d;border-color:var(--accent2);}
+  .chip.active[data-cat="Graphic Design"]{background:var(--accent);color:#0b0b0d;border-color:var(--accent);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:36px;}
+  .card{position:relative;}
+  .card-frame{
+    position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;
+    background:var(--surface);border:1px solid var(--line);
+  }
+  .card-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;filter:brightness(0.92) saturate(0.95);}
+  .card:hover .card-frame img{transform:scale(1.045);filter:brightness(1) saturate(1.05);}
+  .card-frame::after{
+    content:"";position:absolute;inset:0;
+    box-shadow:inset 0 0 60px rgba(0,0,0,0.55);
+    pointer-events:none;
+  }
+  .plaque{
+    margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:16px;
+  }
+  .plaque-title{font-family:'Fraunces',serif;font-style:italic;font-size:19px;margin:0 0 4px;}
+  .plaque-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:.04em;}
+  .cat-tag{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 9px;border-radius:5px;white-space:nowrap;height:fit-content;
+  }
+  .cat-tag.ux{background:var(--accent2-soft);color:var(--accent2);}
+  .cat-tag.gd{background:var(--accent-soft);color:var(--accent);}
+  .empty-note{font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:13px;}
+  footer.contact{background:var(--surface);border-top:1px solid var(--line);padding:100px 0 48px;}
+  .contact-inner{display:flex;flex-direction:column;align-items:flex-start;gap:26px;}
+  .contact-avail{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;}
+  .contact-cta{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:clamp(30px,5vw,56px);margin:0;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s;}
+  .contact-cta:hover{border-color:var(--text);}
+  .socials{display:flex;gap:24px;margin-top:8px;}
+  .socials a{font-family:'JetBrains Mono',monospace;font-size:12px;text-decoration:none;color:var(--text-dim);letter-spacing:.05em;text-transform:uppercase;}
+  .socials a:hover{color:var(--text);}
+  .fine-print{margin-top:64px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  .fine-print a{text-decoration:none;color:var(--text-dim);}
+  .fine-print a:hover{color:var(--text);}
+  @media (max-width:720px){
+    .about-grid{grid-template-columns:1fr;}
+    .about-frame{aspect-ratio:16/9;}
+    .nav-links{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-name mono" id="navName">Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</header>
+
+<section class="hero" id="hero">
+  <div class="hero-spotlight" id="spotlight"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">Portfolio — <span id="heroYear">2026</span></div>
+    <h1 class="display-name" id="heroName">Your Name</h1>
+    <p class="role-line mono" id="heroRole">Graphic Designer &amp; UI/UX Designer</p>
+    <p class="tagline" id="heroTagline">I design interfaces and identities that hold up under a second look.</p>
+  </div>
+  <div class="scroll-hint mono">Scroll ↓</div>
+</section>
+
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">Selected Work</h2>
+      <span class="section-num mono" id="workCount">No. 001–002</span>
+    </div>
+    <div class="filters" id="filters">
+      <button class="chip active" data-cat="all">All</button>
+      <button class="chip" data-cat="UI/UX Design">UI/UX Design</button>
+      <button class="chip" data-cat="Graphic Design">Graphic Design</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">About</h2>
+      <span class="section-num mono">No. 00</span>
+    </div>
+    <div class="about-grid">
+      <div class="about-frame">Aa</div>
+      <div>
+        <p class="about-text" id="aboutText">Write a short paragraph here about your background and approach.</p>
+        <div class="about-meta">
+          <div><span>Based</span>Add your city</div>
+          <div><span>Focus</span>UI/UX &amp; Graphic Design</div>
+          <div><span>Status</span><span id="aboutAvail" style="text-transform:none;color:var(--text);">Open for projects</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="contact" id="contact">
+  <div class="wrap contact-inner">
+    <div class="contact-avail" id="footAvail">Currently open for new projects</div>
+    <a class="contact-cta" id="emailLink" href="mailto:you@example.com">you@example.com</a>
+    <div class="socials" id="socials"></div>
+    <div class="fine-print wrap" style="padding:0;width:100%;">
+      <span>© <span id="year"></span> <span id="footName">Your Name</span></span>
+      <a href="/admin/">Admin</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const FALLBACK_SITE = {
+  name: "Your Name",
+  role: "Graphic Designer & UI/UX Designer",
+  tagline: "I design interfaces and identities that hold up under a second look.",
+  about: "Write a short paragraph here about your background, your design approach, and the kind of work you like to take on.",
+  email: "you@example.com",
+  instagram: "",
+  behance: "",
+  availability: "Currently open for new projects"
+};
+const FALLBACK_WORK = { items: [
+  { title:"Sample UI/UX Project", category:"UI/UX Design", year:"2026", medium:"Figma, mobile app", description:"Replace this with a real project.", image:"/images/uploads/sample-uiux.svg" },
+  { title:"Sample Graphic Design Project", category:"Graphic Design", year:"2026", medium:"Brand identity", description:"Replace this with a real project.", image:"/images/uploads/sample-graphic.svg" }
+]};
+
+let currentFilter = 'all';
+let workItems = [];
+
+function catClass(cat){ return cat === 'UI/UX Design' ? 'ux' : 'gd'; }
+
+function renderSite(site){
+  document.getElementById('navName').textContent = site.name || 'Portfolio';
+  document.getElementById('heroName').textContent = site.name || 'Your Name';
+  document.getElementById('heroRole').textContent = site.role || '';
+  document.getElementById('heroTagline').textContent = site.tagline || '';
+  document.getElementById('aboutText').textContent = site.about || '';
+  document.getElementById('aboutAvail').textContent = site.availability || '';
+  document.getElementById('footAvail').textContent = site.availability || '';
+  document.getElementById('footName').textContent = site.name || 'Your Name';
+  const emailLink = document.getElementById('emailLink');
+  if(site.email){ emailLink.textContent = site.email; emailLink.href = 'mailto:' + site.email; }
+  const socials = document.getElementById('socials');
+  socials.innerHTML = '';
+  if(site.instagram){ socials.innerHTML += `<a href="${site.instagram}" target="_blank" rel="noopener">Instagram</a>`; }
+  if(site.behance){ socials.innerHTML += `<a href="${site.behance}" target="_blank" rel="noopener">Behance</a>`; }
+}
+
+function renderWork(){
+  const grid = document.getElementById('grid');
+  const filtered = currentFilter === 'all' ? workItems : workItems.filter(w => w.category === currentFilter);
+  document.getElementById('workCount').textContent = filtered.length
+    ? `No. 001–${String(filtered.length).padStart(3,'0')}`
+    : 'No items yet';
+
+  if(!filtered.length){
+    grid.innerHTML = `<p class="empty-note">Nothing here yet — add a piece from the <a href="/admin/" style="color:var(--accent)">admin panel</a>.</p>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((item, i) => `
+    <div class="card">
+      <div class="card-frame">
+        <img src="${item.image}" alt="${item.title || ''}" loading="lazy" />
+      </div>
+      <div class="plaque">
+        <div>
+          <p class="plaque-title">${item.title || 'Untitled'}</p>
+          <p class="plaque-meta">${item.medium ? item.medium + ' — ' : ''}${item.year || ''}</p>
+        </div>
+        <span class="cat-tag ${catClass(item.category)}">${item.category || ''}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('filters').addEventListener('click', (e) => {
+  const btn = e.target.closest('.chip');
+  if(!btn) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = btn.dataset.cat;
+  renderWork();
+});
+
+const hero = document.getElementById('hero');
+const spotlight = document.getElementById('spotlight');
+hero.addEventListener('mousemove', (e) => {
+  const r = hero.getBoundingClientRect();
+  spotlight.style.setProperty('--x', (e.clientX - r.left) + 'px');
+  spotlight.style.setProperty('--y', (e.clientY - r.top) + 'px');
+});
+
+async function loadContent(){
+  let site = FALLBACK_SITE, work = FALLBACK_WORK;
+  try{
+    const [siteRes, workRes] = await Promise.all([
+      fetch('/content/site.json', {cache:'no-store'}),
+      fetch('/content/work.json', {cache:'no-store'})
+    ]);
+    if(siteRes.ok) site = await siteRes.json();
+    if(workRes.ok) work = await workRes.json();
+  }catch(err){
+    console.warn('Using fallback content — JSON fetch failed (expected if opened locally):', err);
+  }
+  renderSite(site);
+  workItems = work.items || [];
+  renderWork();
+}
+
+loadContent();
+</script>
+</body>
+</html>

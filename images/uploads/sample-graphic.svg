@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1a17"/>
+      <stop offset="100%" stop-color="#141319"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#g2)"/>
+  <circle cx="420" cy="420" r="260" fill="#c9a15a" opacity="0.5"/>
+  <circle cx="760" cy="520" r="180" fill="#c9a15a" opacity="0.25"/>
+  <rect x="150" y="700" width="900" height="18" fill="#c9a15a" opacity="0.8"/>
+  <text x="600" y="130" font-family="serif" font-style="italic" font-size="64" fill="#ece7de" text-anchor="middle">Aa</text>
+  <text x="600" y="830" font-family="monospace" font-size="22" fill="#8b8790" text-anchor="middle">SAMPLE — REPLACE IN ADMIN</text>
+</svg>

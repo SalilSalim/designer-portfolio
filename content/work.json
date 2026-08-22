@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "title": "Sample UI/UX Project",
+      "category": "UI/UX Design",
+      "year": "2026",
+      "medium": "Figma, mobile app",
+      "description": "Replace this with a real project. Add a short line about the brief, your role, and the outcome.",
+      "image": "/images/uploads/sample-uiux.svg"
+    },
+    {
+      "title": "Sample Graphic Design Project",
+      "category": "Graphic Design",
+      "year": "2026",
+      "medium": "Brand identity",
+      "description": "Replace this with a real project. Add a short line about the brief, your role, and the outcome.",
+      "image": "/images/uploads/sample-graphic.svg"
+    }
+  ]
+}

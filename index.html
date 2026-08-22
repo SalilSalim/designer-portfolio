@@ -100,8 +100,9 @@
   }
   .chip:hover{color:var(--text);border-color:var(--text-dim);}
   .chip.active[data-cat="all"]{background:var(--text);color:var(--bg);border-color:var(--text);}
-  .chip.active[data-cat="UI/UX Design"]{background:var(--accent2);color:#0b0b0d;border-color:var(--accent2);}
-  .chip.active[data-cat="Graphic Design"]{background:var(--accent);color:#0b0b0d;border-color:var(--accent);}
+  /* Per-category chip/tag colors are assigned dynamically in JS (see CATEGORY_PALETTE)
+     so any category typed in the admin panel gets a distinct, consistent color
+     with no code changes required. */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:36px;}
   .card{position:relative;}
   .card-frame{
@@ -125,14 +126,15 @@
     font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
     padding:4px 9px;border-radius:5px;white-space:nowrap;height:fit-content;
   }
-  .cat-tag.ux{background:var(--accent2-soft);color:var(--accent2);}
-  .cat-tag.gd{background:var(--accent-soft);color:var(--accent);}
   .empty-note{font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:13px;}
   footer.contact{background:var(--surface);border-top:1px solid var(--line);padding:100px 0 48px;}
   .contact-inner{display:flex;flex-direction:column;align-items:flex-start;gap:26px;}
   .contact-avail{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;}
   .contact-cta{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:clamp(30px,5vw,56px);margin:0;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s;}
   .contact-cta:hover{border-color:var(--text);}
+  .contact-details{font-size:13px;color:var(--text-dim);display:flex;gap:20px;flex-wrap:wrap;letter-spacing:.03em;}
+  .contact-details a{color:var(--text-dim);text-decoration:none;}
+  .contact-details a:hover{color:var(--text);}
   .socials{display:flex;gap:24px;margin-top:8px;}
   .socials a{font-family:'JetBrains Mono',monospace;font-size:12px;text-decoration:none;color:var(--text-dim);letter-spacing:.05em;text-transform:uppercase;}
   .socials a:hover{color:var(--text);}
@@ -180,8 +182,6 @@
     </div>
     <div class="filters" id="filters">
       <button class="chip active" data-cat="all">All</button>
-      <button class="chip" data-cat="UI/UX Design">UI/UX Design</button>
-      <button class="chip" data-cat="Graphic Design">Graphic Design</button>
     </div>
     <div class="grid" id="grid"></div>
   </div>
@@ -194,11 +194,11 @@
       <span class="section-num mono">No. 00</span>
     </div>
     <div class="about-grid">
-      <div class="about-frame">Aa</div>
+      <div class="about-frame" id="aboutFrame">Aa</div>
       <div>
         <p class="about-text" id="aboutText">Write a short paragraph here about your background and approach.</p>
         <div class="about-meta">
-          <div><span>Based</span>Add your city</div>
+          <div><span>Based</span><span id="aboutLocation">Add your city</span></div>
           <div><span>Focus</span>UI/UX &amp; Graphic Design</div>
           <div><span>Status</span><span id="aboutAvail" style="text-transform:none;color:var(--text);">Open for projects</span></div>
         </div>
@@ -211,6 +211,7 @@
   <div class="wrap contact-inner">
     <div class="contact-avail" id="footAvail">Currently open for new projects</div>
     <a class="contact-cta" id="emailLink" href="mailto:you@example.com">you@example.com</a>
+    <div class="contact-details mono" id="contactDetails"></div>
     <div class="socials" id="socials"></div>
     <div class="fine-print wrap" style="padding:0;width:100%;">
       <span>© <span id="year"></span> <span id="footName">Your Name</span></span>
@@ -240,7 +241,17 @@ const FALLBACK_WORK = { items: [
 let currentFilter = 'all';
 let workItems = [];
 
-function catClass(cat){ return cat === 'UI/UX Design' ? 'ux' : 'gd'; }
+const CATEGORY_PALETTE = ['#c9a15a', '#7c6a8f', '#6f9c8d', '#b17a7a', '#7a93b1', '#a68a5b'];
+function categoryColor(cat){
+  let h = 0;
+  for(let i = 0; i < (cat || '').length; i++){ h = (h * 31 + cat.charCodeAt(i)) >>> 0; }
+  return CATEGORY_PALETTE[h % CATEGORY_PALETTE.length];
+}
+function hexToRgba(hex, alpha){
+  const v = parseInt(hex.slice(1), 16);
+  const r = (v >> 16) & 255, g = (v >> 8) & 255, b = v & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
 
 function renderSite(site){
   document.getElementById('navName').textContent = site.name || 'Portfolio';
@@ -248,18 +259,46 @@ function renderSite(site){
   document.getElementById('heroRole').textContent = site.role || '';
   document.getElementById('heroTagline').textContent = site.tagline || '';
   document.getElementById('aboutText').textContent = site.about || '';
+  document.getElementById('aboutLocation').textContent = site.location || 'Add your city';
   document.getElementById('aboutAvail').textContent = site.availability || '';
   document.getElementById('footAvail').textContent = site.availability || '';
   document.getElementById('footName').textContent = site.name || 'Your Name';
+
+  const frame = document.getElementById('aboutFrame');
+  frame.innerHTML = site.portrait
+    ? `<img src="${site.portrait}" alt="${site.name || 'Portrait'}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />`
+    : 'Aa';
+
   const emailLink = document.getElementById('emailLink');
   if(site.email){ emailLink.textContent = site.email; emailLink.href = 'mailto:' + site.email; }
+
+  const details = document.getElementById('contactDetails');
+  details.innerHTML = '';
+  if(site.phone){ details.innerHTML += `<a href="tel:${site.phone}">${site.phone}</a>`; }
+  if(site.address){ details.innerHTML += `<span>${site.address}</span>`; }
+  if(site.resume){ details.innerHTML += `<a href="${site.resume}" target="_blank" rel="noopener">Download CV ↓</a>`; }
+
   const socials = document.getElementById('socials');
   socials.innerHTML = '';
   if(site.instagram){ socials.innerHTML += `<a href="${site.instagram}" target="_blank" rel="noopener">Instagram</a>`; }
   if(site.behance){ socials.innerHTML += `<a href="${site.behance}" target="_blank" rel="noopener">Behance</a>`; }
 }
 
+function renderFilters(){
+  const bar = document.getElementById('filters');
+  const cats = [...new Set(workItems.map(w => w.category).filter(Boolean))];
+  const chips = [`<button class="chip${currentFilter==='all' ? ' active' : ''}" data-cat="all">All</button>`]
+    .concat(cats.map(cat => {
+      const color = categoryColor(cat);
+      const active = currentFilter === cat;
+      const style = active ? `background:${color};color:#0b0b0d;border-color:${color};` : '';
+      return `<button class="chip${active ? ' active' : ''}" data-cat="${cat}" style="${style}">${cat}</button>`;
+    }));
+  bar.innerHTML = chips.join('');
+}
+
 function renderWork(){
+  renderFilters();
   const grid = document.getElementById('grid');
   const filtered = currentFilter === 'all' ? workItems : workItems.filter(w => w.category === currentFilter);
   document.getElementById('workCount').textContent = filtered.length
@@ -271,7 +310,9 @@ function renderWork(){
     return;
   }
 
-  grid.innerHTML = filtered.map((item, i) => `
+  grid.innerHTML = filtered.map((item) => {
+    const color = categoryColor(item.category);
+    const card = `
     <div class="card">
       <div class="card-frame">
         <img src="${item.image}" alt="${item.title || ''}" loading="lazy" />
@@ -281,10 +322,13 @@ function renderWork(){
           <p class="plaque-title">${item.title || 'Untitled'}</p>
           <p class="plaque-meta">${item.medium ? item.medium + ' — ' : ''}${item.year || ''}</p>
         </div>
-        <span class="cat-tag ${catClass(item.category)}">${item.category || ''}</span>
+        <span class="cat-tag" style="background:${hexToRgba(color,0.16)};color:${color};">${item.category || ''}</span>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+    return item.link
+      ? `<a href="${item.link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">${card}</a>`
+      : card;
+  }).join('');
 }
 
 document.getElementById('filters').addEventListener('click', (e) => {

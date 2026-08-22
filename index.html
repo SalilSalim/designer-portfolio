@@ -323,5 +323,20 @@ async function loadContent(){
 
 loadContent();
 </script>
+
+<!-- Netlify Identity widget: required so invite/confirmation links (the
+     #invite_token in the URL) get processed and the admin login works. -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", (user) => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
 </body>
 </html>

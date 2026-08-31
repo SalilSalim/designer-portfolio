@@ -1,15 +1,15 @@
 {
   "name": "Your Name",
-  "role": "Graphic Designer & UI/UX Designer",
-  "tagline": "I design interfaces and identities that hold up under a second look.",
+  "resume": "/images/uploads/salil_salim_resume.pdf",
   "about": "Write a short paragraph here about your background, your design approach, and the kind of work you like to take on. Two or three sentences is plenty — this is the first thing a client reads, so keep it direct.",
-  "portrait": "",
-  "location": "",
-  "email": "you@example.com",
-  "phone": "",
+  "phone": "+91 884 876 1440 ",
+  "tagline": "I design interfaces and identities that hold up under a second look.",
+  "instagram": "https://www.instagram.com/pixelstudioz88?igsi=OXB1dHM1YWszZTB4",
+  "behance": "https://www.behance.net/pixelstudioz",
   "address": "",
-  "resume": "",
-  "instagram": "",
-  "behance": "",
-  "availability": "Currently open for new projects"
+  "location": "Ernakulam, Kerala, India",
+  "role": "Graphic Designer & UI/UX Designer",
+  "availability": "Currently open for new projects",
+  "portrait": "/images/uploads/sali.png",
+  "email": "pixelstudioz88@gmail.com"
 }

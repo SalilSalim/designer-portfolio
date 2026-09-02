@@ -1,0 +1,9 @@
+{
+  "items": [
+    { "title": "Discover", "description": "Understanding the need and context behind the project." },
+    { "title": "Define", "description": "Researching, analysing and defining the real problem." },
+    { "title": "Ideate", "description": "Brainstorming and sketching creative concepts." },
+    { "title": "Design", "description": "Crafting high-fidelity, engaging interfaces." },
+    { "title": "Test & Iterate", "description": "Testing with users and refining for the best experience." }
+  ]
+}

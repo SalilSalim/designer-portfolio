@@ -1,20 +1,27 @@
 {
   "items": [
     {
-      "title": "Logos",
-      "category": "Graphic Design",
-      "year": "2020",
-      "medium": "illustrator, photoshop",
-      "description": "",
-      "image": "/images/uploads/image-10-.png"
+      "title": "Sample Carousel Project",
+      "category": "UI/UX Design",
+      "year": "2026",
+      "medium": "Figma, mobile app",
+      "description": "Replace this with a real project. This one has two images to show how the carousel works — click the arrows.",
+      "link": "",
+      "images": [
+        { "image": "/images/uploads/sample-uiux.svg" },
+        { "image": "/images/uploads/sample-graphic.svg" }
+      ]
     },
     {
-      "title": "Social media",
+      "title": "Sample Graphic Design Project",
       "category": "Graphic Design",
       "year": "2026",
       "medium": "Brand identity",
       "description": "Replace this with a real project. Add a short line about the brief, your role, and the outcome.",
-      "image": "/images/uploads/429678061edd134aa09f70e7ec28f99c.jpg"
+      "link": "",
+      "images": [
+        { "image": "/images/uploads/sample-graphic.svg" }
+      ]
     }
   ]
 }

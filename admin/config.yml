@@ -17,15 +17,78 @@ collections:
           - { label: "Role / Title", name: "role", widget: "string" }
           - { label: "Tagline", name: "tagline", widget: "text" }
           - { label: "About paragraph", name: "about", widget: "text" }
-          - { label: "Profile photo", name: "portrait", widget: "image", required: false, hint: "Shown in the About section. Leave blank to keep the plain frame." }
+          - { label: "Profile photo", name: "portrait", widget: "image", required: false }
           - { label: "Location / city", name: "location", widget: "string", required: false }
+          - { label: "Years of experience", name: "yearsExperience", widget: "string", required: false, hint: "e.g. 5+" }
+          - { label: "Projects completed", name: "projectsCompleted", widget: "string", required: false, hint: "e.g. 30+" }
+          - { label: "Happy clients", name: "happyClients", widget: "string", required: false, hint: "e.g. 15+" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Phone", name: "phone", widget: "string", required: false }
-          - { label: "Address", name: "address", widget: "string", required: false, hint: "As much or as little as you want shown — city only is fine." }
-          - { label: "Resume / CV file", name: "resume", widget: "file", required: false, hint: "Upload a PDF — a \"Download CV\" link appears automatically when this is set." }
+          - { label: "Address", name: "address", widget: "string", required: false }
+          - { label: "Resume / CV file", name: "resume", widget: "file", required: false }
           - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
           - { label: "Behance URL", name: "behance", widget: "string", required: false }
           - { label: "Availability note", name: "availability", widget: "string" }
+
+  - name: "services"
+    label: "Services"
+    files:
+      - name: "items"
+        label: "Services List"
+        file: "content/services.json"
+        fields:
+          - label: "Services"
+            name: "items"
+            widget: "list"
+            summary: "{{title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+  - name: "tools"
+    label: "Tools & Skills"
+    files:
+      - name: "items"
+        label: "Tools List"
+        file: "content/tools.json"
+        fields:
+          - label: "Tools"
+            name: "items"
+            widget: "list"
+            summary: "{{name}}"
+            field: { label: "Tool name", name: "name", widget: "string" }
+
+  - name: "process"
+    label: "Design Process"
+    files:
+      - name: "items"
+        label: "Process Steps"
+        file: "content/process.json"
+        fields:
+          - label: "Steps"
+            name: "items"
+            widget: "list"
+            summary: "{{title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+  - name: "testimonials"
+    label: "Testimonials"
+    files:
+      - name: "items"
+        label: "Testimonials List"
+        file: "content/testimonials.json"
+        fields:
+          - label: "Testimonials"
+            name: "items"
+            widget: "list"
+            summary: "{{name}}"
+            fields:
+              - { label: "Quote", name: "quote", widget: "text" }
+              - { label: "Client name", name: "name", widget: "string" }
+              - { label: "Client role / company", name: "role", widget: "string", required: false }
+              - { label: "Client photo", name: "photo", widget: "image", required: false }
 
   - name: "work"
     label: "Work"
@@ -43,9 +106,14 @@ collections:
               - label: "Category"
                 name: "category"
                 widget: "string"
-                hint: "Type any category you like — e.g. Branding, Illustration, Packaging, Web Design. It gets its own filter tab on the site automatically, no code changes needed."
+                hint: "Type any category you like — e.g. Branding, Illustration, Packaging. It gets its own filter tab automatically."
               - { label: "Year", name: "year", widget: "string" }
               - { label: "Medium / Tools", name: "medium", widget: "string", required: false }
               - { label: "Description", name: "description", widget: "text", required: false }
               - { label: "Project link (optional)", name: "link", widget: "string", required: false }
-              - { label: "Image", name: "image", widget: "image" }
+              - label: "Images (for the carousel)"
+                name: "images"
+                widget: "list"
+                summary: "{{fields.image}}"
+                field: { label: "Image", name: "image", widget: "image" }
+                hint: "Add one or more images — visitors can click through them like a carousel."

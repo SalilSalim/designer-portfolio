@@ -1,0 +1,12 @@
+{
+  "items": [
+    { "name": "Figma" },
+    { "name": "Sketch" },
+    { "name": "Adobe XD" },
+    { "name": "Photoshop" },
+    { "name": "Illustrator" },
+    { "name": "Webflow" },
+    { "name": "Framer" },
+    { "name": "Notion" }
+  ]
+}

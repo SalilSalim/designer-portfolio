@@ -1,18 +1,12 @@
 {
   "items": [
-    {
-      "name": "Photoshop"
-    },
-    {
-      "name": "Illustrator"
-    },
-    {
-      "name": "Figma"
-    },
-    "InDesign",
-    "Canva",
-    {
-      "name": "Sketch"
-    }
+    { "name": "Figma", "icon": "", "level": 90 },
+    { "name": "Sketch", "icon": "", "level": 75 },
+    { "name": "Adobe XD", "icon": "", "level": 70 },
+    { "name": "Photoshop", "icon": "", "level": 80 },
+    { "name": "Illustrator", "icon": "", "level": 75 },
+    { "name": "Webflow", "icon": "", "level": 65 },
+    { "name": "Framer", "icon": "", "level": 60 },
+    { "name": "Notion", "icon": "", "level": 85 }
   ]
 }

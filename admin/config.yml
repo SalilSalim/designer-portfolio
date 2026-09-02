@@ -24,11 +24,40 @@ collections:
           - { label: "Happy clients", name: "happyClients", widget: "string", required: false, hint: "e.g. 15+" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Phone", name: "phone", widget: "string", required: false }
+          - { label: "WhatsApp number", name: "whatsapp", widget: "string", required: false, hint: "Include country code, digits only — e.g. 919876543210. The \"Let's Talk\" button opens a chat with this number when set." }
           - { label: "Address", name: "address", widget: "string", required: false }
           - { label: "Resume / CV file", name: "resume", widget: "file", required: false }
           - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
           - { label: "Behance URL", name: "behance", widget: "string", required: false }
           - { label: "Availability note", name: "availability", widget: "string" }
+
+  - name: "design"
+    label: "Design Settings"
+    files:
+      - name: "theme"
+        label: "Colors, Fonts & Layout"
+        file: "content/theme.json"
+        fields:
+          - { label: "Dark background (hero & footer)", name: "bgDark", widget: "color", default: "#081c15" }
+          - { label: "Light background (content sections)", name: "bgLight", widget: "color", default: "#ebf2fa" }
+          - { label: "Emerald accent", name: "emerald", widget: "color", default: "#1b4322" }
+          - { label: "Teal accent", name: "teal", widget: "color", default: "#036666" }
+          - { label: "Amber / button color", name: "amber", widget: "color", default: "#fbb02d" }
+          - { label: "Dark text color", name: "textDark", widget: "color", default: "#0d211a" }
+          - { label: "Heading font", name: "headingFont", widget: "string", default: "Fraunces", hint: "Any Google Font name, e.g. Fraunces, Playfair Display, Poppins." }
+          - { label: "Body font", name: "bodyFont", widget: "string", default: "Space Grotesk", hint: "Any Google Font name, e.g. Space Grotesk, Inter, Lato." }
+          - label: "Base text size"
+            name: "baseFontSize"
+            widget: "number"
+            default: 16
+            min: 14
+            max: 20
+            hint: "Scales all text on the site proportionally. Default is 16."
+          - label: "Hero text alignment"
+            name: "heroAlign"
+            widget: "select"
+            default: "left"
+            options: ["left", "center"]
 
   - name: "services"
     label: "Services"
@@ -56,7 +85,16 @@ collections:
             name: "items"
             widget: "list"
             summary: "{{name}}"
-            field: { label: "Tool name", name: "name", widget: "string" }
+            fields:
+              - { label: "Tool name", name: "name", widget: "string" }
+              - { label: "Icon (optional)", name: "icon", widget: "image", required: false, hint: "Upload a small icon/logo. Leave blank to show the tool's initials instead." }
+              - label: "Skill level"
+                name: "level"
+                widget: "number"
+                required: false
+                min: 0
+                max: 100
+                hint: "0–100, optional. Shows a proficiency bar under the tool name. Leave blank to hide it."
 
   - name: "process"
     label: "Design Process"
@@ -110,10 +148,10 @@ collections:
               - { label: "Year", name: "year", widget: "string" }
               - { label: "Medium / Tools", name: "medium", widget: "string", required: false }
               - { label: "Description", name: "description", widget: "text", required: false }
-              - { label: "Project link (optional)", name: "link", widget: "string", required: false }
+              - { label: "Project link (optional)", name: "link", widget: "string", required: false, hint: "Shown as a \"Visit live\" button inside the full-screen view." }
               - label: "Images (for the carousel)"
                 name: "images"
                 widget: "list"
                 summary: "{{fields.image}}"
                 field: { label: "Image", name: "image", widget: "image" }
-                hint: "Add one or more images — visitors can click through them like a carousel."
+                hint: "Add one or more images — click any project on the site to view them full-screen."

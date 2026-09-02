@@ -1,0 +1,12 @@
+{
+  "bgDark": "#081c15",
+  "bgLight": "#ebf2fa",
+  "emerald": "#1b4322",
+  "teal": "#036666",
+  "amber": "#fbb02d",
+  "textDark": "#0d211a",
+  "headingFont": "Fraunces",
+  "bodyFont": "Space Grotesk",
+  "baseFontSize": 16,
+  "heroAlign": "left"
+}

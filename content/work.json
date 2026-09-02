@@ -1,15 +1,16 @@
 {
   "items": [
     {
-      "title": "Sample Carousel Project",
-      "category": "UI/UX Design",
-      "year": "2026",
-      "medium": "Figma, mobile app",
+      "title": "Social Media Poster",
+      "category": "Graphic Designer",
+      "year": "2024",
+      "medium": "Photoshop, Illustrator",
       "description": "Replace this with a real project. This one has two images to show how the carousel works — click the arrows.",
       "link": "",
       "images": [
-        { "image": "/images/uploads/sample-uiux.svg" },
-        { "image": "/images/uploads/sample-graphic.svg" }
+        "/images/uploads/429678061edd134aa09f70e7ec28f99c.jpg",
+        "/images/uploads/79a99fac91c366943dda6db3e128731a.jpg",
+        "/images/uploads/a49a242ea9e7c66cee251909a6ef0f89.jpg"
       ]
     },
     {
@@ -20,7 +21,9 @@
       "description": "Replace this with a real project. Add a short line about the brief, your role, and the outcome.",
       "link": "",
       "images": [
-        { "image": "/images/uploads/sample-graphic.svg" }
+        {
+          "image": "/images/uploads/sample-graphic.svg"
+        }
       ]
     }
   ]

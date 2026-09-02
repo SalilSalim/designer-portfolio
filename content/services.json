@@ -1,8 +1,28 @@
 {
   "items": [
-    { "title": "Product Design", "description": "Designing intuitive and engaging user interfaces for web and mobile products." },
-    { "title": "UI/UX Design", "description": "Creating seamless user experiences through research, wireframing and prototyping." },
-    { "title": "Design Systems", "description": "Building scalable design systems and component libraries for consistent experiences." },
-    { "title": "User Research", "description": "Understanding users deeply through research and data to inform better design." }
+    {
+      "title": "Graphic Design",
+      "description": "Creative and visually engaging designs that strengthen your brand identity and communication."
+    },
+    {
+      "title": "UI/UX Design",
+      "description": "User-friendly website and mobile app interfaces focused on clean visuals, usability, and great user experiences."
+    },
+    {
+      "title": "Branding & Identity",
+      "description": "Logo design, brand guidelines, business cards, social media branding, and complete visual identities."
+    },
+    {
+      "title": "Social Media Design",
+      "description": "Eye-catching posts, stories, banners, advertisements, and promotional creatives for social platforms."
+    },
+    {
+      "title": "E-commerce Design",
+      "description": "Product creatives, promotional banners, marketplace graphics, and visual content designed to improve online sales."
+    },
+    {
+      "description": "Brochures, flyers, posters, catalogs, packaging, and other professional marketing materials.",
+      "title": "Print & Marketing Design"
+    }
   ]
 }

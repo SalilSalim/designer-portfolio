@@ -148,16 +148,46 @@
   .card{cursor:pointer;}
 
   /* Lightbox */
-  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(8,28,21,0.94);display:flex;align-items:center;justify-content:center;padding:40px 24px;overflow-y:auto;}
+  .lightbox{position:fixed;inset:0;z-index:100;background:#060f0b;display:flex;flex-direction:column;color:var(--text-light);}
   .lightbox[hidden]{display:none;}
-  .lb-close{position:fixed;top:20px;right:24px;background:none;border:none;color:var(--text-light);font-size:34px;line-height:1;cursor:pointer;z-index:101;}
-  .lightbox-inner{max-width:1000px;width:100%;margin:auto;display:grid;grid-template-columns:1.3fr 1fr;gap:36px;align-items:start;}
-  .lb-media{position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;background:rgba(255,255,255,0.05);}
-  .lb-info{color:var(--text-light);}
-  .lb-info h2{font-family:var(--font-heading);font-style:italic;font-size:28px;margin:14px 0 6px;}
-  .lb-meta{font-family:'JetBrains Mono',monospace;font-size:12px;opacity:0.6;margin:0 0 18px;}
-  .lb-desc{font-size:15px;line-height:1.7;opacity:0.85;margin:0 0 26px;}
-  @media (max-width:760px){ .lightbox-inner{grid-template-columns:1fr;} }
+
+  .lb-topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:16px 20px;border-bottom:1px solid var(--line-dark);flex:0 0 auto;}
+  .lb-heading h2{font-family:var(--font-heading);font-style:italic;font-size:21px;margin:8px 0 3px;}
+  .lb-meta{font-family:'JetBrains Mono',monospace;font-size:11px;opacity:0.6;margin:0;}
+  .lb-tools{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
+  .lb-counter{font-size:12px;opacity:0.6;}
+  .lb-toolbtn{background:rgba(255,255,255,0.08);border:1px solid var(--line-dark);color:var(--text-light);
+    font-family:'JetBrains Mono',monospace;font-size:12px;padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;}
+  .lb-toolbtn:hover{background:rgba(255,255,255,0.16);}
+  .lb-close{font-size:20px;line-height:1;padding:5px 13px;}
+
+  /* The stage scrolls — this is what lets you pan a tall image top to bottom */
+  .lb-stage{flex:1 1 auto;overflow:auto;display:flex;align-items:center;justify-content:center;padding:20px;-webkit-overflow-scrolling:touch;}
+  .lb-stage img{display:block;margin:auto;transition:opacity .2s;}
+  /* Fit mode: whole image visible, nothing cropped */
+  .lb-stage.fit img{max-width:100%;max-height:100%;object-fit:contain;}
+  /* Full-size mode: image fills the width, stage scrolls vertically to reach every edge */
+  .lb-stage.full{align-items:flex-start;}
+  .lb-stage.full img{width:100%;max-width:1400px;height:auto;}
+
+  .lb-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:102;
+    background:rgba(8,28,21,0.75);border:1px solid var(--line-dark);color:var(--text-light);
+    width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:22px;line-height:1;}
+  .lb-nav:hover{background:rgba(8,28,21,0.95);}
+  .lb-nav.prev{left:16px;} .lb-nav.next{right:16px;}
+  .lb-nav[hidden]{display:none;}
+
+  .lb-bottombar{flex:0 0 auto;padding:14px 20px;border-top:1px solid var(--line-dark);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .lb-desc{font-size:14px;line-height:1.6;opacity:0.8;margin:0;max-width:760px;}
+  .lb-bottombar:empty{display:none;}
+
+  @media (max-width:640px){
+    .lb-heading h2{font-size:17px;}
+    .lb-nav{width:38px;height:38px;font-size:19px;}
+    .lb-nav.prev{left:8px;} .lb-nav.next{right:8px;}
+    .lb-toolbtn{font-size:11px;padding:6px 10px;}
+  }
 
   /* Process */
   .process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;}
@@ -319,16 +349,29 @@
 </footer>
 
 <div class="lightbox" id="lightbox" hidden>
-  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
-  <div class="lightbox-inner">
-    <div class="lb-media" id="lbMedia"></div>
-    <div class="lb-info">
+  <div class="lb-topbar">
+    <div class="lb-heading">
       <span class="cat-tag" id="lbCat"></span>
       <h2 id="lbTitle"></h2>
       <p class="lb-meta" id="lbMeta"></p>
-      <p class="lb-desc" id="lbDesc"></p>
-      <a href="#" id="lbLink" class="btn btn-amber" target="_blank" rel="noopener" style="display:none;">Visit live ↗</a>
     </div>
+    <div class="lb-tools">
+      <span class="lb-counter mono" id="lbCounter"></span>
+      <button class="lb-toolbtn" id="lbZoom" title="Toggle full size">Full size ⤢</button>
+      <button class="lb-toolbtn lb-close" id="lbClose" aria-label="Close">×</button>
+    </div>
+  </div>
+
+  <div class="lb-stage" id="lbStage">
+    <img id="lbImg" alt="" />
+  </div>
+
+  <button class="lb-nav prev" id="lbPrev" aria-label="Previous">‹</button>
+  <button class="lb-nav next" id="lbNext" aria-label="Next">›</button>
+
+  <div class="lb-bottombar">
+    <p class="lb-desc" id="lbDesc"></p>
+    <a href="#" id="lbLink" class="btn btn-amber" target="_blank" rel="noopener" style="display:none;">Visit live ↗</a>
   </div>
 </div>
 
@@ -566,26 +609,42 @@ document.getElementById('grid').addEventListener('click', (e) => {
   if(card){ openLightbox(parseInt(card.dataset.workIdx, 10)); }
 });
 
-// Lightbox
+// Fullscreen project viewer
 const lightbox = document.getElementById('lightbox');
-let lbImages = [], lbIdx = 0;
+const lbStage  = document.getElementById('lbStage');
+const lbImg    = document.getElementById('lbImg');
+const lbPrev   = document.getElementById('lbPrev');
+const lbNext   = document.getElementById('lbNext');
+const lbZoom   = document.getElementById('lbZoom');
+let lbImages = [], lbIdx = 0, lbFull = false;
 
-function renderLbMedia(){
-  const media = document.getElementById('lbMedia');
-  const imagesHtml = lbImages.map((src,i) => `<img src="${src}" class="car-img${i===0?' active':''}" data-i="${i}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:${i===0?1:0};transition:opacity .3s;" />`).join('');
-  const controls = lbImages.length > 1 ? `
-      <button class="car-btn prev" data-dir="-1" style="opacity:1;">‹</button>
-      <button class="car-btn next" data-dir="1" style="opacity:1;">›</button>
-      <div class="car-dots">${lbImages.map((_,i) => `<span class="dot${i===0?' active':''}" data-i="${i}"></span>`).join('')}</div>` : '';
-  media.innerHTML = imagesHtml + controls;
-  lbIdx = 0;
+function showImage(i){
+  if(!lbImages.length) return;
+  lbIdx = (i + lbImages.length) % lbImages.length;
+  lbImg.style.opacity = 0;
+  lbImg.src = lbImages[lbIdx];
+  lbImg.onload = () => { lbImg.style.opacity = 1; };
+  lbStage.scrollTop = 0;
+  lbStage.scrollLeft = 0;
+  document.getElementById('lbCounter').textContent =
+    lbImages.length > 1 ? `${lbIdx + 1} / ${lbImages.length}` : '';
+  const multi = lbImages.length > 1;
+  lbPrev.hidden = !multi;
+  lbNext.hidden = !multi;
+}
+
+function setZoom(full){
+  lbFull = full;
+  lbStage.classList.toggle('full', full);
+  lbStage.classList.toggle('fit', !full);
+  lbZoom.textContent = full ? 'Fit to screen ⤡' : 'Full size ⤢';
+  if(!full){ lbStage.scrollTop = 0; }
 }
 
 function openLightbox(idx){
   const item = renderedWork[idx];
   if(!item) return;
   lbImages = getImages(item);
-  renderLbMedia();
   const color = categoryColor(item.category);
   const cat = document.getElementById('lbCat');
   cat.textContent = item.category || '';
@@ -597,6 +656,8 @@ function openLightbox(idx){
   const link = document.getElementById('lbLink');
   if(item.link){ link.href = item.link; link.style.display = 'inline-flex'; }
   else { link.style.display = 'none'; }
+  setZoom(false);
+  showImage(0);
   lightbox.hidden = false;
   document.body.style.overflow = 'hidden';
 }
@@ -606,21 +667,37 @@ function closeLightbox(){
   document.body.style.overflow = '';
 }
 
+lbPrev.addEventListener('click', () => showImage(lbIdx - 1));
+lbNext.addEventListener('click', () => showImage(lbIdx + 1));
+lbZoom.addEventListener('click', () => setZoom(!lbFull));
 document.getElementById('lbClose').addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
-document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
 
-document.getElementById('lbMedia').addEventListener('click', (e) => {
-  const btn = e.target.closest('.car-btn');
-  const dot = e.target.closest('.dot');
-  if(!btn && !dot) return;
-  const imgs = [...document.querySelectorAll('#lbMedia .car-img')];
-  const dots = [...document.querySelectorAll('#lbMedia .dot')];
-  let nextIdx = btn ? (lbIdx + parseInt(btn.dataset.dir,10) + imgs.length) % imgs.length : parseInt(dot.dataset.i,10);
-  imgs.forEach((img,i) => img.style.opacity = i===nextIdx ? 1 : 0);
-  dots.forEach((d,i) => d.classList.toggle('active', i===nextIdx));
-  lbIdx = nextIdx;
+// Click the image itself to toggle between fit and full size
+lbImg.addEventListener('click', () => setZoom(!lbFull));
+
+// Keyboard: arrows page through images, Esc closes
+document.addEventListener('keydown', (e) => {
+  if(lightbox.hidden) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') showImage(lbIdx - 1);
+  if(e.key === 'ArrowRight') showImage(lbIdx + 1);
 });
+
+// Swipe left/right on touch devices (ignored while scrolling a zoomed image)
+let touchX = null, touchY = null;
+lbStage.addEventListener('touchstart', (e) => {
+  touchX = e.changedTouches[0].clientX;
+  touchY = e.changedTouches[0].clientY;
+}, {passive:true});
+lbStage.addEventListener('touchend', (e) => {
+  if(touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  const dy = e.changedTouches[0].clientY - touchY;
+  if(Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5){
+    showImage(dx < 0 ? lbIdx + 1 : lbIdx - 1);
+  }
+  touchX = touchY = null;
+}, {passive:true});
 
 // Hero spotlight follows the cursor
 const hero = document.getElementById('hero');

@@ -134,8 +134,13 @@
   .card-frame{position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;background:rgba(255,255,255,0.04);border:1px solid var(--line-dark);}
   .car-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease;}
   .car-img.active{opacity:1;}
-  .car-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(8,28,21,0.65);color:var(--text-light);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;line-height:1;z-index:2;opacity:0;transition:opacity .2s;}
-  .card-frame:hover .car-btn{opacity:1;}
+  .car-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(8,28,21,0.65);color:var(--text-light);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;line-height:1;z-index:2;opacity:1;transition:opacity .2s;}
+  /* On mouse devices, fade the arrows in on hover. On touch devices they stay
+     visible, so the first tap opens the project instead of triggering :hover. */
+  @media (hover:hover){
+    .car-btn{opacity:0;}
+    .card-frame:hover .car-btn{opacity:1;}
+  }
   .car-btn.prev{left:10px;} .car-btn.next{right:10px;}
   .car-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:2;}
   .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;}
@@ -608,6 +613,40 @@ document.getElementById('grid').addEventListener('click', (e) => {
   const card = e.target.closest('.card');
   if(card){ openLightbox(parseInt(card.dataset.workIdx, 10)); }
 });
+
+// Swipe a card's carousel left/right without opening the project
+const gridEl = document.getElementById('grid');
+let cardTouchX = null, cardTouchY = null, cardSwiped = false;
+
+gridEl.addEventListener('touchstart', (e) => {
+  cardTouchX = e.changedTouches[0].clientX;
+  cardTouchY = e.changedTouches[0].clientY;
+  cardSwiped = false;
+}, {passive:true});
+
+gridEl.addEventListener('touchend', (e) => {
+  if(cardTouchX === null) return;
+  const frame = e.target.closest('.card-frame');
+  const dx = e.changedTouches[0].clientX - cardTouchX;
+  const dy = e.changedTouches[0].clientY - cardTouchY;
+  if(frame && Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5){
+    const imgs = [...frame.querySelectorAll('.car-img')];
+    const dots = [...frame.querySelectorAll('.dot')];
+    if(imgs.length > 1){
+      const cur = imgs.findIndex(img => img.classList.contains('active'));
+      const next = (cur + (dx < 0 ? 1 : -1) + imgs.length) % imgs.length;
+      imgs.forEach((img, i) => img.classList.toggle('active', i === next));
+      dots.forEach((d, i) => d.classList.toggle('active', i === next));
+      cardSwiped = true;
+    }
+  }
+  cardTouchX = cardTouchY = null;
+}, {passive:true});
+
+// A swipe shouldn't also count as a tap that opens the project
+gridEl.addEventListener('click', (e) => {
+  if(cardSwiped){ e.stopPropagation(); cardSwiped = false; }
+}, true);
 
 // Fullscreen project viewer
 const lightbox = document.getElementById('lightbox');

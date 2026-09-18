@@ -25,6 +25,18 @@
           "image": "/images/uploads/sample-graphic.svg"
         }
       ]
+    },
+    {
+      "title": "Logo & Branding",
+      "category": "Graphic Design",
+      "medium": "Photoshop & Illustrator",
+      "images": [
+        "/images/uploads/chatgpt-image-sep-16-2026-02_04_33-pm.png",
+        "/images/uploads/chatgpt-image-sep-16-2026-02_04_22-pm.png",
+        "/images/uploads/chatgpt-image-sep-16-2026-02_04_39-pm.png",
+        "/images/uploads/chatgpt-image-sep-16-2026-02_04_45-pm.png",
+        "/images/uploads/chatgpt-image-sep-16-2026-02_04_51-pm.png"
+      ]
     }
   ]
 }
